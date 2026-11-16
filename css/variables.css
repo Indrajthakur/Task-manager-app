@@ -1,0 +1,34 @@
+
+:root {
+    --bg-primary: #0b0b19;
+    --bg-secondary: #121225;
+    --bg-card: #15152b;
+    --bg-hover: #20203b;
+
+    --purple: #7138ff;
+    --purple-light: #925cff;
+    --purple-dark: #4922b5;
+
+    --text-primary: #f5f4ff;
+    --text-secondary: #a5a4c7;
+    --text-muted: #777694;
+
+    --green: #16c995;
+    --orange: #ffad35;
+    --red: #f04478;
+
+    --border: rgba(157, 145, 255, 0.13);
+
+    --gradient-purple: linear-gradient(
+        135deg,
+        #7945ff,
+        #4921b5
+    );
+
+    --card-radius: 20px;
+    --button-radius: 12px;
+
+    --sidebar-width: 310px;
+
+    --transition: all 0.3s ease;
+}

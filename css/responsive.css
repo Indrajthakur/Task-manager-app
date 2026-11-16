@@ -1,0 +1,24 @@
+/* Small screen overflow protection */
+
+@media (max-width: 600px) {
+    .tasks-panel,
+    .progress-panel,
+    .upcoming-panel,
+    .filters-panel {
+        padding: 16px;
+        min-width: 0;
+    }
+
+    .task-item {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .task-actions {
+        flex-wrap: wrap;
+    }
+
+    .task-tabs {
+        flex-wrap: wrap;
+    }
+}

@@ -1,0 +1,254 @@
+
+/* =================================
+   TASK LIST
+================================= */
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 22px;
+}
+
+/* =================================
+   TASK CARD
+================================= */
+
+.task-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 18px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.task-item:hover {
+    background: var(--bg-hover);
+
+    border-color: rgba(145, 95, 255, 0.4);
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* =================================
+   TASK CHECKBOX
+================================= */
+
+.task-checkbox {
+    width: 20px;
+    height: 20px;
+
+    accent-color: var(--purple);
+
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.task-checkbox:focus-visible {
+    outline: 2px solid var(--purple);
+    outline-offset: 3px;
+}
+
+/* =================================
+   TASK INFORMATION
+================================= */
+
+.task-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.task-title {
+    color: var(--text-primary);
+
+    font-size: 14px;
+    font-weight: 650;
+
+    margin-bottom: 8px;
+
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+.task-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* =================================
+   PRIORITY LABELS
+================================= */
+
+.task-priority {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 5px 11px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.priority-high {
+    color: #ff7195;
+    background: rgba(240, 68, 120, 0.14);
+
+    border: 1px solid rgba(240, 68, 120, 0.15);
+}
+
+.priority-medium {
+    color: #ffbd59;
+    background: rgba(255, 173, 53, 0.14);
+
+    border: 1px solid rgba(255, 173, 53, 0.15);
+}
+
+.priority-low {
+    color: #38d9ad;
+    background: rgba(22, 201, 149, 0.14);
+
+    border: 1px solid rgba(22, 201, 149, 0.15);
+}
+
+/* =================================
+   TASK ACTIONS
+================================= */
+
+.task-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.task-action-btn {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    color: var(--text-secondary);
+    background: transparent;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.task-action-btn:hover {
+    color: #ffffff;
+    background: var(--purple);
+
+    transform: scale(1.06);
+}
+
+.task-action-btn:focus-visible {
+    outline: 2px solid var(--purple);
+    outline-offset: 3px;
+}
+
+/* =================================
+   COMPLETED TASKS
+================================= */
+
+.task-item.completed {
+    opacity: 0.65;
+}
+
+.task-item.completed .task-title {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.task-item.completed .task-checkbox {
+    accent-color: #38d9ad;
+}
+
+/* =================================
+   EMPTY TASK LIST
+================================= */
+
+.empty-state {
+    padding: 40px 15px;
+
+    text-align: center;
+
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+================================= */
+
+@media (max-width: 768px) {
+    .task-list {
+        gap: 12px;
+    }
+
+    .task-item {
+        padding: 15px;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .task-item {
+        gap: 10px;
+        padding: 13px;
+        border-radius: 13px;
+    }
+
+    .task-title {
+        font-size: 13px;
+    }
+
+    .task-meta {
+        gap: 7px;
+    }
+
+    .task-actions {
+        gap: 3px;
+    }
+
+    .task-action-btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .task-priority {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+}

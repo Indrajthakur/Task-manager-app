@@ -1,0 +1,103 @@
+
+/* ================================
+   THEME SYSTEM
+================================ */
+
+:root {
+    color-scheme: dark;
+}
+
+/* Light theme */
+
+body.light-theme {
+    color-scheme: light;
+
+    --bg-primary: #f4f3fb;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-hover: #eeebfa;
+
+    --text-primary: #211d35;
+    --text-secondary: #68627d;
+    --text-muted: #918ba3;
+
+    --border: rgba(83, 62, 140, 0.13);
+
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* Light theme sidebar */
+
+body.light-theme .sidebar {
+    background: #ffffff;
+    border-color: var(--border);
+}
+
+body.light-theme .main-content {
+    background:
+        radial-gradient(
+            ellipse at 75% 0%,
+            rgba(113, 56, 255, 0.07),
+            transparent 45%
+        ),
+        var(--bg-primary);
+}
+
+/* Light theme welcome section */
+
+body.light-theme .welcome-section {
+    background: linear-gradient(
+        110deg,
+        #e8e0ff,
+        #f4edff
+    );
+}
+
+body.light-theme .welcome-section h1 {
+    color: #211d35;
+}
+
+body.light-theme .welcome-section p {
+    color: #68627d;
+}
+
+/* Light theme task cards */
+
+body.light-theme .task-item {
+    background: #faf9ff;
+}
+
+body.light-theme .task-item:hover {
+    background: #f0edfa;
+}
+
+/* Light theme inputs */
+
+body.light-theme input,
+body.light-theme select {
+    color: var(--text-primary);
+}
+
+/* Smooth theme transition */
+
+body,
+.sidebar,
+.main-content,
+.stat-card,
+.tasks-panel,
+.progress-panel,
+.upcoming-panel,
+.filters-panel,
+.task-item,
+.modal-content {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
+}
+body.light-theme textarea {
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    border-color: var(--border);
+}
