@@ -3,7 +3,7 @@
    TASK MANAGER - MAIN APPLICATION
 ================================= */
 
-import { getTasks, saveTasks } from "./storage.js";
+import { getTasks, saveTasks, clearTasks } from "./storage.js";
 
 import {
     addTask,
@@ -12,8 +12,8 @@ import {
     updateTask
 } from "./tasks.js";
 
-import { fetchTasks } from "./supabase-tasks.js";
-import { supabase } from "./supabase.js";
+import { fetchTasks } from "./task-api.js";
+import { getToken, clearSession, logout } from "./api.js";
 
 import { updateDashboard } from "./dashboard.js";
 
@@ -511,10 +511,16 @@ function initializeViewAll() {
 // =================================
 
 document.addEventListener("DOMContentLoaded", async () => {
+        document.getElementById("logoutBtn")
+        ?.addEventListener("click", () => {
+            clearTasks();
+            logout();
+        });
     try {
-        const { data, error } = await supabase.auth.getSession();
+        const token = getToken();
 
-        if (error || !data.session) {
+        if (!token) {
+            clearSession();
             window.location.replace("./auth.html");
             return;
         }
@@ -537,6 +543,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     } catch (error) {
         console.error("Could not load tasks:", error);
+
+        if (
+            error.message === "Invalid or expired token" ||
+            error.message === "Access token required"
+        ) {
+            clearSession();
+            window.location.replace("./auth.html");
+            return;
+        }
 
         showNotification(
             "Could not load tasks. Please try again.",

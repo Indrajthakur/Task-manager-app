@@ -1,5 +1,4 @@
-
-import { supabase } from "./supabase.js";
+import { register, login } from "./api.js";
 
 // Elements
 const authForm = document.getElementById("authForm");
@@ -25,13 +24,17 @@ function setAuthMode(signup) {
     loginTab.classList.toggle("active", !signup);
     signupTab.classList.toggle("active", signup);
 
-    authTitle.textContent = signup ? "Create Account" : "Welcome Back";
+    authTitle.textContent = signup
+        ? "Create Account"
+        : "Welcome Back";
 
     authDescription.textContent = signup
         ? "Create your account to manage your tasks"
         : "Login to manage your tasks";
 
-    authSubmit.textContent = signup ? "Create Account" : "Login";
+    authSubmit.textContent = signup
+        ? "Create Account"
+        : "Login";
 
     confirmPasswordField.hidden = !signup;
     confirmPasswordInput.required = signup;
@@ -51,7 +54,9 @@ signupTab.addEventListener("click", () => {
 // Display messages
 function showMessage(message, isError = false) {
     authMessage.textContent = message;
-    authMessage.style.color = isError ? "#ff6685" : "#16c995";
+    authMessage.style.color = isError
+        ? "#ff6685"
+        : "#16c995";
 }
 
 // Handle authentication
@@ -73,28 +78,29 @@ authForm.addEventListener("submit", async (event) => {
                 return;
             }
 
-            const { data, error } = await supabase.auth.signUp({
-                email,
-                password
-            });
-
-            if (error) throw error;
-
-            if (data.session) {
-                window.location.href = "./index.html";
-            } else {
+            if (password.length < 8) {
                 showMessage(
-                    "Account created! Check your email to confirm your account."
+                    "Password must contain at least 8 characters.",
+                    true
                 );
+                return;
             }
 
-        } else {
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email,
-                password
-            });
+            const name = email.split("@")[0].slice(0, 100);
 
-            if (error) throw error;
+            await register(name, email, password);
+
+            setAuthMode(false);
+
+            passwordInput.value = "";
+            confirmPasswordInput.value = "";
+
+            showMessage(
+                "Account created successfully! Please login."
+            );
+
+        } else {
+            await login(email, password);
 
             window.location.href = "./index.html";
         }
@@ -104,7 +110,9 @@ authForm.addEventListener("submit", async (event) => {
 
     } finally {
         authSubmit.disabled = false;
-        authSubmit.textContent = isSignup ? "Create Account" : "Login";
+        authSubmit.textContent = isSignup
+            ? "Create Account"
+            : "Login";
     }
 });
 

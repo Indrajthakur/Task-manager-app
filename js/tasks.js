@@ -1,7 +1,7 @@
 
-/* ================================
-   TASK MANAGEMENT - SUPABASE
-================================ */
+/* =================================
+   TASK MANAGEMENT - REST API
+================================= */
 
 import {
     getTasks,
@@ -13,7 +13,7 @@ import {
     removeTask,
     editTask,
     setTaskCompletion
-} from "./supabase-tasks.js";
+} from "./task-api.js";
 
 // Add a task
 export async function addTask(title, priority, dueDate) {

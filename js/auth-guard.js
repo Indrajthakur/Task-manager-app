@@ -1,8 +1,25 @@
+import { getToken, clearSession } from "./api.js";
 
-import { supabase } from "./supabase.js";
+function isSessionValid() {
+    const token = getToken();
 
-const { data, error } = await supabase.auth.getSession();
+    if (!token) return false;
 
-if (error || !data.session) {
+    try {
+        const payload = JSON.parse(
+            atob(token.split(".")[1]
+                .replace(/-/g, "+")
+                .replace(/_/g, "/"))
+        );
+
+        return payload.exp * 1000 > Date.now();
+
+    } catch {
+        return false;
+    }
+}
+
+if (!isSessionValid()) {
+    clearSession();
     window.location.replace("./auth.html");
 }
