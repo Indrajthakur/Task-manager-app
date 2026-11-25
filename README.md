@@ -1,52 +1,101 @@
-# 🚀 Task Manager
+# Task Manager — Full Stack Web Application
 
-A modern productivity dashboard designed to help users organize tasks, manage priorities, and track daily progress.
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-Runtime-339933?logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-Backend-000000?logo=express)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-4169E1?logo=postgresql&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel)
+![Render](https://img.shields.io/badge/Render-Backend-46E3B7?logo=render)
 
-## ✨ Features
+A modern full-stack task management application built with JavaScript, Node.js, Express and PostgreSQL. Designed to help users organize tasks, manage deadlines and track productivity through an intuitive dashboard.
+
+## Live Demo
+
+- [Launch Application](https://task-manager-app-five-virid.vercel.app)
+- [Backend API](https://developer-backend-lavp.onrender.com)
+- [Backend Repository](https://github.com/Indrajthakur/developer-backend)
+
+## Features
 
 - Secure user registration and login
-- Create, edit, and delete tasks
-- Mark tasks as completed
-- Set task priorities and due dates
-- Search and filter tasks
-- Track pending, completed, and overdue tasks
-- Interactive productivity dashboard
-- Cloud-based task storage with Supabase
-- Modern dark-themed interface
+- JWT-based authentication
+- Bcrypt password hashing
+- Private user-specific tasks
+- Create, edit and delete tasks
+- Task priorities and due dates
+- Task completion tracking
+- Real-time dashboard statistics based on loaded tasks
+- Search and filtering
+- Dark and light themes
+- Responsive interface
+- Cloud database persistence
 
-## 🛠️ Technologies Used
+## Tech Stack
 
-- HTML5
-- CSS3
-- JavaScript (ES6 Modules)
-- Supabase Authentication
-- Supabase PostgreSQL Database
+| Layer | Technology |
+|---|---|
+| Frontend | HTML5, CSS3, JavaScript |
+| Backend | Node.js, Express.js |
+| Database | PostgreSQL |
+| Authentication | JWT, bcrypt |
+| Frontend Hosting | Vercel |
+| Backend Hosting | Render |
+| Version Control | Git & GitHub |
 
-## 📸 Project Preview
+## Architecture
 
-Open `index.html` through a local development server to explore the dashboard.
+Frontend → REST API → JWT Middleware → PostgreSQL
 
-## ⚙️ Installation
+## API Endpoints
 
-1. Clone this repository:
-   ```bash
-   git clone YOUR_REPOSITORY_URL
-   ```
-2. Open the project folder in VS Code.
-3. Configure your Supabase project credentials in `js/supabase.js`.
-4. Start the project using a local development server, such as Live Server.
-5. Open the website in your browser.
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | /api/auth/register | Register user |
+| POST | /api/auth/login | Authenticate user |
+| GET | /api/tasks | Retrieve private tasks |
+| POST | /api/tasks | Create task |
+| PUT | /api/tasks/:id | Update task |
+| DELETE | /api/tasks/:id | Delete task |
+| GET | /api/health | Server health check |
 
-## 🔐 Database & Security
+## Security
 
-This project uses Supabase for authentication and cloud storage. Row Level Security (RLS) protects user-specific task data.
+- Password hashing
+- JWT token verification
+- User-level data isolation
+- Parameterized SQL queries
+- Authentication rate limiting
+- CORS configuration
+- Environment-based secrets
 
-**Important:** Never expose your Supabase `service_role` or secret key in frontend code.
+## Run Locally
 
-## 🎯 Project Goal
+```bash
+git clone https://github.com/Indrajthakur/Task-manager-app.git
+cd Task-manager-app
+npx serve . -l 3000
+```
 
-To provide a simple, efficient, and user-friendly platform that helps people stay organized, manage responsibilities, and improve productivity.
+Open http://localhost:3000/auth.html.
 
-## 👨‍💻 Author
+## Future Improvements
 
-Created as a personal web development project.﻿# Task-manager-app
+- Email verification
+- Password recovery
+- Recurring tasks
+- Calendar integration
+- Productivity analytics
+- Task collaboration
+- Automated API testing
+
+## Author
+
+**Indraraj Singh Thakur**
+
+Computer Science Student | Web Developer
+
+[GitHub](https://github.com/Indrajthakur) · [LinkedIn](https://www.linkedin.com/in/indraraj-thakurr-2a590a3b1)
+
+---
+
+Built from scratch with a focus on full-stack development, security and user experience.
