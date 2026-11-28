@@ -39,3 +39,46 @@ window.addEventListener("appinstalled", () => {
 
     console.log("Task Manager installed successfully!");
 });
+
+// Enable Task Manager notifications
+
+const notificationBtn =
+    document.getElementById("notificationBtn");
+
+notificationBtn?.addEventListener("click", async () => {
+
+    if (!("Notification" in window) ||
+        !("serviceWorker" in navigator)) {
+
+        alert("Notifications are not supported on this device.");
+        return;
+    }
+
+    try {
+        const permission =
+            await Notification.requestPermission();
+
+        if (permission !== "granted") {
+            alert("Notification permission was not granted.");
+            return;
+        }
+
+        const registration =
+            await navigator.serviceWorker.getRegistration();
+
+        if (!registration?.active) {
+            alert("Please refresh the app and try again.");
+            return;
+        }
+
+        await registration.showNotification("Task Manager 🚀", {
+            body: "Notifications are successfully enabled!",
+            icon: "./icons/icon-192.png",
+            badge: "./icons/icon-192.png"
+        });
+
+    } catch (error) {
+        console.error("Notification error:", error);
+        alert("Unable to display notification.");
+    }
+});
