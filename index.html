@@ -24,9 +24,31 @@
 <body>
 
     <div class="app-container">
+        <!-- Mobile Header -->
+<header class="mobile-header">
+    <div class="mobile-brand">
+        <span class="logo-icon">✓</span>
+        <h2>Task Manager</h2>
+    </div>
+
+    <button id="mobileMenuBtn"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="sidebar">
+        ☰
+    </button>
+</header>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
+    <button id="closeSidebar"
+        type="button"
+        aria-label="Close menu">
+        ✕
+    </button>
             <div class="logo">
                 <span class="logo-icon">✓</span>
                 <h2>Task Manager</h2>

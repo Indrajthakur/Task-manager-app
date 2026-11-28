@@ -559,3 +559,40 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
     }
 });
+// Mobile Sidebar Navigation
+
+const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+const closeSidebar = document.getElementById("closeSidebar");
+const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+function openMobileMenu() {
+    sidebar.classList.add("open");
+    sidebarOverlay.classList.add("active");
+    document.body.classList.add("menu-open");
+    mobileMenuBtn.setAttribute("aria-expanded", "true");
+}
+
+function closeMobileMenu() {
+    sidebar.classList.remove("open");
+    sidebarOverlay.classList.remove("active");
+    document.body.classList.remove("menu-open");
+    mobileMenuBtn.setAttribute("aria-expanded", "false");
+}
+
+mobileMenuBtn.addEventListener("click", openMobileMenu);
+closeSidebar.addEventListener("click", closeMobileMenu);
+sidebarOverlay.addEventListener("click", closeMobileMenu);
+
+document.querySelectorAll(".nav-link").forEach(link => {
+    link.addEventListener("click", closeMobileMenu);
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        closeMobileMenu();
+    }
+});
+
+window.matchMedia("(max-width: 768px)")
+    .addEventListener("change", closeMobileMenu);

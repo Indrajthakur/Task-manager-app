@@ -175,3 +175,139 @@
         justify-content: flex-end;
     }
 }
+
+/* =========================
+   MOBILE NAVIGATION
+========================= */
+
+.mobile-header,
+.sidebar-overlay,
+#closeSidebar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .mobile-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 90;
+    }
+
+    .mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .mobile-brand h2 {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    #mobileMenuBtn,
+    #closeSidebar {
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        background: var(--bg-hover);
+        color: var(--text-primary);
+        border-radius: 12px;
+        font-size: 23px;
+        cursor: pointer;
+    }
+
+    /* Sliding sidebar */
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: min(290px, 85vw);
+        min-width: 0;
+        height: 100dvh;
+        padding: 24px 18px;
+        z-index: 200;
+
+        transform: translateX(-100%);
+        visibility: hidden;
+        transition: transform 0.3s ease,
+                    visibility 0.3s;
+
+        overflow-y: auto;
+        border-right: 1px solid var(--border);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        visibility: visible;
+    }
+
+    #closeSidebar {
+        align-self: flex-end;
+        margin-bottom: 15px;
+        flex-shrink: 0;
+    }
+
+    .sidebar .logo {
+        margin-bottom: 30px;
+    }
+
+    .sidebar-nav {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        overflow: visible;
+        gap: 10px;
+    }
+
+    .nav-link {
+        width: 100%;
+        padding: 14px 16px;
+        font-size: 14px;
+        min-height: 48px;
+    }
+
+    .theme-toggle {
+        margin-top: auto;
+        padding-top: 20px;
+    }
+
+    /* Background overlay */
+
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 150;
+
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s ease;
+    }
+
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    body.menu-open {
+        overflow: hidden;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sidebar,
+    .sidebar-overlay {
+        transition: none;
+    }
+}
