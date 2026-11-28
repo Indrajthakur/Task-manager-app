@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "task-manager-static-v1";
+const CACHE_NAME = "task-manager-static-v2";
 
 const STATIC_ASSETS = [
     "./manifest.json",
@@ -107,5 +107,69 @@ self.addEventListener("fetch", event => {
                     || Response.error();
             }
         })()
+    );
+});
+
+// =================================
+// BACKGROUND PUSH NOTIFICATIONS
+// =================================
+
+self.addEventListener("push", event => {
+
+    let data = {};
+
+    try {
+        data = event.data?.json() || {};
+    } catch {
+        data = {
+            body: event.data?.text()
+        };
+    }
+
+    const title = data.title || "Task Manager";
+
+    const options = {
+        body: data.body || "You have a task reminder!",
+        icon: "./icons/icon-192.png",
+        badge: "./icons/icon-192.png",
+        vibrate: [200, 100, 200],
+        tag: data.tag || "task-reminder",
+        data: {
+            url: "./index.html"
+        }
+    };
+
+    event.waitUntil(
+        self.registration.showNotification(title, options)
+    );
+});
+
+// =================================
+// HANDLE NOTIFICATION CLICKS
+// =================================
+
+self.addEventListener("notificationclick", event => {
+
+    event.notification.close();
+
+    const targetUrl = new URL(
+        "./index.html",
+        self.registration.scope
+    ).href;
+
+    event.waitUntil(
+        self.clients.matchAll({
+            type: "window",
+            includeUncontrolled: true
+        }).then(async clients => {
+
+            for (const client of clients) {
+                if (client.url === targetUrl) {
+                    return client.focus();
+                }
+            }
+
+            return self.clients.openWindow(targetUrl);
+        })
     );
 });

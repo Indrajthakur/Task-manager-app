@@ -64,7 +64,46 @@ export async function login(email, password) {
     return data;
 }
 
-export function logout() {
-    clearSession();
-    window.location.href = "./auth.html";
+
+export async function logout() {
+    try {
+        if ("serviceWorker" in navigator) {
+            const registration =
+                await navigator.serviceWorker.getRegistration();
+
+            const subscription =
+                await registration?.pushManager.getSubscription();
+
+            if (subscription) {
+                const endpoint = subscription.endpoint;
+
+                // Unsubscribe the browser
+                try {
+                    await subscription.unsubscribe();
+                } catch (error) {
+                    console.warn("Browser unsubscribe failed:", error);
+                }
+
+                // Remove subscription from database
+                await apiRequest(
+                    "/api/notifications/unsubscribe",
+                    {
+                        method: "POST",
+                        body: JSON.stringify({ endpoint })
+                    }
+                );
+            }
+        }
+
+    } catch (error) {
+        console.error("Notification cleanup failed:", error);
+
+        alert(
+            "Notification cleanup could not be confirmed."
+        );
+
+    } finally {
+        clearSession();
+        window.location.replace("./auth.html");
+    }
 }

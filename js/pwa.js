@@ -1,4 +1,5 @@
 
+import { apiRequest } from "./api.js";
 let deferredPrompt = null;
 
 const installButton =
@@ -40,19 +41,42 @@ window.addEventListener("appinstalled", () => {
     console.log("Task Manager installed successfully!");
 });
 
-// Enable Task Manager notifications
+
+// PUSH NOTIFICATION SUBSCRIPTION
 
 const notificationBtn =
     document.getElementById("notificationBtn");
 
+// Convert VAPID public key
+function urlBase64ToUint8Array(base64String) {
+    const padding =
+        "=".repeat((4 - base64String.length % 4) % 4);
+
+    const base64 = (base64String + padding)
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
+
+    const rawData = window.atob(base64);
+
+    return Uint8Array.from(
+        rawData,
+        char => char.charCodeAt(0)
+    );
+}
+
+// Enable push notifications
 notificationBtn?.addEventListener("click", async () => {
 
-    if (!("Notification" in window) ||
-        !("serviceWorker" in navigator)) {
-
-        alert("Notifications are not supported on this device.");
+    if (
+        !("Notification" in window) ||
+        !("serviceWorker" in navigator) ||
+        !("PushManager" in window)
+    ) {
+        alert("Push notifications are not supported.");
         return;
     }
+
+    notificationBtn.disabled = true;
 
     try {
         const permission =
@@ -67,18 +91,55 @@ notificationBtn?.addEventListener("click", async () => {
             await navigator.serviceWorker.getRegistration();
 
         if (!registration?.active) {
-            alert("Please refresh the app and try again.");
+            alert("Refresh the app and try again.");
             return;
         }
 
-        await registration.showNotification("Task Manager 🚀", {
-            body: "Notifications are successfully enabled!",
-            icon: "./icons/icon-192.png",
-            badge: "./icons/icon-192.png"
+        // Get public VAPID key from backend
+
+        const { publicKey } = await apiRequest(
+            "/api/notifications/public-key"
+        );
+
+        // Check existing subscription
+
+        let subscription =
+            await registration.pushManager.getSubscription();
+
+        // Create subscription
+
+        if (!subscription) {
+            subscription =
+                await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey:
+                        urlBase64ToUint8Array(publicKey)
+                });
+        }
+
+        // Save subscription in PostgreSQL
+
+        await apiRequest("/api/notifications/subscribe", {
+            method: "POST",
+            body: JSON.stringify(subscription.toJSON())
         });
 
+        await registration.showNotification(
+            "Task Manager 🚀",
+            {
+                body: "Push notifications enabled successfully!",
+                icon: "./icons/icon-192.png"
+            }
+        );
+
+        console.log("Push subscription saved!");
+
     } catch (error) {
-        console.error("Notification error:", error);
-        alert("Unable to display notification.");
+        console.error("Push subscription error:", error);
+
+        alert(error.message || "Subscription failed.");
+
+    } finally {
+        notificationBtn.disabled = false;
     }
 });

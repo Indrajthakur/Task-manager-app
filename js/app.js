@@ -511,10 +511,11 @@ function initializeViewAll() {
 // =================================
 
 document.addEventListener("DOMContentLoaded", async () => {
-        document.getElementById("logoutBtn")
-        ?.addEventListener("click", () => {
+    document.getElementById("logoutBtn")
+        ?.addEventListener("click", async () => {
+            document.getElementById("logoutBtn").disabled = true;
             clearTasks();
-            logout();
+            await logout();
         });
     try {
         const token = getToken();
