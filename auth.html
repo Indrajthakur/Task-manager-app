@@ -1,80 +1,210 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Login or create an account to manage your tasks.">
+
     <title>Task Manager | Authentication</title>
+
+    <!-- =========================
+         PWA CONFIGURATION
+    ========================== -->
+
+    <link rel="manifest" href="./manifest.json">
+
+    <meta name="theme-color" content="#7138ff">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent">
+
+    <meta name="apple-mobile-web-app-title"
+        content="Task Manager">
+
+    <link rel="apple-touch-icon"
+        href="./icons/icon-192.png">
+
+    <link rel="icon"
+        type="image/png"
+        href="./icons/icon-192.png">
+
+    <!-- =========================
+         STYLESHEETS
+    ========================== -->
 
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/variables.css">
     <link rel="stylesheet" href="./css/auth.css">
+
 </head>
 
 <body>
 
-    <div class="auth-container">
+    <!-- =========================
+         AUTHENTICATION CONTAINER
+    ========================== -->
+
+    <main class="auth-container">
 
         <div class="auth-card">
 
+            <!-- WELCOME MESSAGE -->
+
             <h1>Welcome Back</h1>
-            <p id="authDescription">Login to manage your tasks</p>
+
+            <p id="authDescription">
+                Login to manage your tasks
+            </p>
+
+            <!-- AUTHENTICATION TABS -->
 
             <div class="auth-tabs">
-                <button type="button" id="loginTab" class="active">
+
+                <button
+                    type="button"
+                    id="loginTab"
+                    class="active">
+
                     Login
+
                 </button>
 
-                <button type="button" id="signupTab">
+                <button
+                    type="button"
+                    id="signupTab">
+
                     Sign Up
+
                 </button>
+
             </div>
+
+            <!-- =========================
+                 AUTHENTICATION FORM
+            ========================== -->
 
             <form id="authForm">
 
+                <!-- EMAIL -->
+
                 <div class="auth-field">
-                    <label for="authEmail">Email</label>
+
+                    <label for="authEmail">
+                        Email
+                    </label>
+
                     <input
                         type="email"
                         id="authEmail"
+                        name="email"
                         placeholder="Enter your email"
-                        required
-                    >
+                        autocomplete="email"
+                        inputmode="email"
+                        autocapitalize="none"
+                        spellcheck="false"
+                        required>
+
                 </div>
 
+                <!-- PASSWORD -->
+
                 <div class="auth-field">
-                    <label for="authPassword">Password</label>
+
+                    <label for="authPassword">
+                        Password
+                    </label>
+
                     <input
                         type="password"
                         id="authPassword"
+                        name="password"
                         placeholder="Enter your password"
+                        autocomplete="current-password"
                         minlength="8"
-                        required
-                    >
+                        required>
+
                 </div>
 
-                <div class="auth-field" id="confirmPasswordField" hidden>
-                    <label for="confirmPassword">Confirm Password</label>
+                <!-- CONFIRM PASSWORD -->
+
+                <div
+                    class="auth-field"
+                    id="confirmPasswordField"
+                    hidden>
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
                     <input
                         type="password"
                         id="confirmPassword"
+                        name="confirmPassword"
                         placeholder="Confirm your password"
-                    >
+                        autocomplete="new-password">
+
                 </div>
 
-                <button type="submit" id="authSubmit">
+                <!-- SUBMIT BUTTON -->
+
+                <button
+                    type="submit"
+                    id="authSubmit">
+
                     Login
+
                 </button>
 
-                <p id="authMessage"></p>
+                <!-- AUTHENTICATION MESSAGE -->
+
+                <p
+                    id="authMessage"
+                    role="status"
+                    aria-live="polite">
+                </p>
 
             </form>
 
         </div>
 
-    </div>
+    </main>
+
+    <!-- =========================
+         AUTHENTICATION SCRIPT
+    ========================== -->
 
     <script type="module" src="./js/auth.js"></script>
+    <script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker
+                .register("./service-worker.js")
+                .then(registration => {
+                    console.log(
+                        "Service Worker registered:",
+                        registration.scope
+                    );
+                })
+                .catch(error => {
+                    console.error(
+                        "Service Worker registration failed:",
+                        error
+                    );
+                });
+        });
+    }
+</script>
 
 </body>
+
 </html>

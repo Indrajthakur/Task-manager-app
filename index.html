@@ -1,13 +1,46 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A modern task management dashboard">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="A modern task management and productivity dashboard">
+
     <title>Task Manager | Dashboard</title>
 
+    <!-- =========================
+         PWA CONFIGURATION
+    ========================== -->
 
+    <link rel="manifest" href="./manifest.json">
+
+    <meta name="theme-color" content="#7138ff">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent">
+
+    <meta name="apple-mobile-web-app-title"
+        content="Task Manager">
+
+    <link rel="apple-touch-icon"
+        href="./icons/icon-192.png">
+
+    <link rel="icon"
+        type="image/png"
+        href="./icons/icon-192.png">
+
+    <!-- =========================
+         STYLESHEETS
+    ========================== -->
 
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/variables.css">
@@ -24,224 +57,502 @@
 <body>
 
     <div class="app-container">
-        <!-- Mobile Header -->
-<header class="mobile-header">
-    <div class="mobile-brand">
-        <span class="logo-icon">✓</span>
-        <h2>Task Manager</h2>
-    </div>
 
-    <button id="mobileMenuBtn"
-        type="button"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="sidebar">
-        ☰
-    </button>
-</header>
+        <!-- =========================
+             MOBILE HEADER
+        ========================== -->
 
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <header class="mobile-header">
 
-        <!-- Sidebar -->
+            <div class="mobile-brand">
+                <span class="logo-icon">✓</span>
+                <h2>Task Manager</h2>
+            </div>
+
+            <button
+                id="mobileMenuBtn"
+                type="button"
+                aria-label="Open menu"
+                aria-expanded="false"
+                aria-controls="sidebar">
+                ☰
+            </button>
+
+        </header>
+
+        <!-- Sidebar Overlay -->
+
+        <div
+            class="sidebar-overlay"
+            id="sidebarOverlay">
+        </div>
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+
         <aside class="sidebar" id="sidebar">
-    <button id="closeSidebar"
-        type="button"
-        aria-label="Close menu">
-        ✕
-    </button>
+
+            <button
+                id="closeSidebar"
+                type="button"
+                aria-label="Close menu">
+                ✕
+            </button>
+
             <div class="logo">
                 <span class="logo-icon">✓</span>
                 <h2>Task Manager</h2>
             </div>
 
-            <nav class="sidebar-nav">
-                <a href="#" class="nav-link active">⌂ Dashboard</a>
-                <a href="#" class="nav-link">☷ All Tasks</a>
-                <a href="#" class="nav-link">▣ Today</a>
-                <a href="#" class="nav-link">♧ Upcoming</a>
-                <a href="#" class="nav-link">✓ Completed</a>
-                <a href="#" class="nav-link">⚙ Settings</a>
-                <a href="#" class="nav-link">☾ Appearance</a>
+            <nav class="sidebar-nav"
+                aria-label="Main navigation">
+
+                <a href="#" class="nav-link active">
+                    ⌂ Dashboard
+                </a>
+
+                <a href="#" class="nav-link">
+                    ☷ All Tasks
+                </a>
+
+                <a href="#" class="nav-link">
+                    ▣ Today
+                </a>
+
+                <a href="#" class="nav-link">
+                    ♧ Upcoming
+                </a>
+
+                <a href="#" class="nav-link">
+                    ✓ Completed
+                </a>
+
+                <a href="#" class="nav-link">
+                    ⚙ Settings
+                </a>
+
+                <a href="#" class="nav-link">
+                    ☾ Appearance
+                </a>
+
             </nav>
 
+            <!-- Productivity Card -->
+
             <div class="productivity-card">
+
                 <span>🚀</span>
+
                 <h3>Stay Productive!</h3>
+
                 <p>You're doing great!</p>
+
             </div>
+
+            <!-- Theme Toggle -->
 
             <div class="theme-toggle">
+
                 <span>◐ Dark Mode</span>
-                <button id="themeToggle">●</button>
+
+                <button
+                    id="themeToggle"
+                    type="button"
+                    aria-label="Toggle color theme">
+                    ●
+                </button>
+
             </div>
+
         </aside>
 
-        <!-- Main Content -->
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
+
         <main class="main-content">
 
-            <!-- Header -->
+            <!-- TOPBAR -->
+
             <header class="topbar">
-                <input type="search" id="searchInput" placeholder="Search tasks...">
 
-               <div class="header-actions">
-    <button aria-label="Notifications">♧</button>
-    <div class="profile">👤</div>
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search tasks..."
+                    aria-label="Search tasks">
 
-    <button id="logoutBtn" type="button"
-        aria-label="Log out" title="Log out">
-        ↪
-    </button>
-</div>
+                <div class="header-actions">
+                    <button id="installAppBtn"
+    type="button"
+    aria-label="Install Task Manager"
+    title="Install App"
+    hidden>
+    ⬇
+</button>
+
+                    <button
+                        type="button"
+                        aria-label="Notifications"
+                        title="Notifications">
+                        ♧
+                    </button>
+
+                    <div class="profile">
+                        👤
+                    </div>
+
+                    <button
+                        id="logoutBtn"
+                        type="button"
+                        aria-label="Log out"
+                        title="Log out">
+                        ↪
+                    </button>
+
+                </div>
+
             </header>
 
-            <!-- Welcome Section -->
+            <!-- =========================
+                 WELCOME SECTION
+            ========================== -->
+
             <section class="welcome-section">
+
                 <h1>Good Evening! 👋</h1>
+
                 <p>Let's get things done today.</p>
+
             </section>
 
-            <!-- Statistics -->
+            <!-- =========================
+                 STATISTICS
+            ========================== -->
+
             <section class="stats-grid">
 
                 <article class="stat-card total">
+
                     <span>☷</span>
+
                     <div>
                         <p>Total Tasks</p>
                         <h2 id="totalTasks">0</h2>
                     </div>
+
                 </article>
 
                 <article class="stat-card completed">
+
                     <span>✓</span>
+
                     <div>
                         <p>Completed</p>
                         <h2 id="completedTasks">0</h2>
                     </div>
+
                 </article>
 
                 <article class="stat-card pending">
+
                     <span>◷</span>
+
                     <div>
                         <p>Pending</p>
                         <h2 id="pendingTasks">0</h2>
                     </div>
+
                 </article>
 
                 <article class="stat-card overdue">
+
                     <span>▣</span>
+
                     <div>
                         <p>Overdue</p>
                         <h2 id="overdueTasks">0</h2>
                     </div>
+
                 </article>
 
             </section>
 
-            <!-- Dashboard Workspace -->
+            <!-- =========================
+                 DASHBOARD WORKSPACE
+            ========================== -->
+
             <section class="dashboard-grid">
 
-                <!-- Task List -->
+                <!-- TASK LIST -->
+
                 <section class="tasks-panel">
 
                     <div class="panel-header">
+
                         <h2>✓ Your Tasks</h2>
 
                         <div class="task-actions">
+
                             <div class="task-tabs">
-                                <button class="active">All</button>
-                                <button>Active</button>
-                                <button>Completed</button>
+
+                                <button
+                                    type="button"
+                                    class="task-tab active"
+                                    data-filter="all">
+                                    All
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="task-tab"
+                                    data-filter="active">
+                                    Active
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="task-tab"
+                                    data-filter="completed">
+                                    Completed
+                                </button>
+
                             </div>
 
-                            <button class="add-task-btn" id="addTaskBtn">
+                            <button
+                                type="button"
+                                class="add-task-btn"
+                                id="addTaskBtn">
                                 + Add Task
                             </button>
+
                         </div>
+
                     </div>
 
-                    <div class="task-list" id="taskList">
-                        <!-- Tasks will be rendered here -->
+                    <div
+                        class="task-list"
+                        id="taskList">
+
+                        <!-- Tasks rendered dynamically -->
+
                     </div>
 
                 </section>
 
-                <!-- Progress -->
+                <!-- PROGRESS PANEL -->
+
                 <section class="progress-panel">
+
                     <h2>▥ Progress</h2>
 
-                    <div class="progress-circle" id="progressCircle">
+                    <div
+                        class="progress-circle"
+                        id="progressCircle">
+
                         <span id="progressValue">0%</span>
+
                     </div>
 
                     <p>Overall Progress</p>
 
                     <div class="motivation-card">
+
                         <span>🏆</span>
+
                         <div>
+
                             <h3>You're on track!</h3>
-                            <p>Keep going, you're doing great.</p>
+
+                            <p>
+                                Keep going, you're doing great.
+                            </p>
+
                         </div>
+
                     </div>
+
                 </section>
 
             </section>
 
-            <!-- Bottom Dashboard -->
+            <!-- =========================
+                 BOTTOM DASHBOARD
+            ========================== -->
+
             <section class="bottom-grid">
 
+                <!-- UPCOMING TASKS -->
+
                 <section class="upcoming-panel">
+
                     <div class="panel-header">
+
                         <h2>▣ Upcoming Tasks</h2>
-                        <button>View All →</button>
+
+                        <button type="button">
+                            View All →
+                        </button>
+
                     </div>
 
                     <div id="upcomingTasks">
-                        <!-- Upcoming tasks will appear here -->
+
+                        <!-- Upcoming tasks rendered dynamically -->
+
                     </div>
+
                 </section>
 
+                <!-- QUICK FILTERS -->
+
                 <section class="filters-panel">
+
                     <h2>⚲ Quick Filters</h2>
 
                     <div class="filter-buttons">
-                        <button class="active" data-priority="all">All</button>
-                        <button data-priority="high">High</button>
-                        <button data-priority="medium">Medium</button>
-                        <button data-priority="low">Low</button>
+
+                        <button
+                            type="button"
+                            class="active"
+                            data-priority="all">
+                            All
+                        </button>
+
+                        <button
+                            type="button"
+                            data-priority="high">
+                            High
+                        </button>
+
+                        <button
+                            type="button"
+                            data-priority="medium">
+                            Medium
+                        </button>
+
+                        <button
+                            type="button"
+                            data-priority="low">
+                            Low
+                        </button>
+
                     </div>
+
                 </section>
 
             </section>
 
         </main>
+
     </div>
 
-    <!-- Task Modal -->
-    <div class="modal" id="taskModal">
+    <!-- =========================
+         TASK MODAL
+    ========================== -->
+
+    <div
+        class="modal hidden"
+        id="taskModal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle">
+
         <div class="modal-content">
+
             <h2 id="modalTitle">Add New Task</h2>
 
             <form id="taskForm">
-                <input type="text" id="taskTitle" placeholder="Enter task name" required>
 
-                <select id="taskPriority">
-                    <option value="low">Low Priority</option>
-                    <option value="medium">Medium Priority</option>
-                    <option value="high">High Priority</option>
+                <input
+                    type="text"
+                    id="taskTitle"
+                    placeholder="Enter task name"
+                    aria-label="Task name"
+                    required>
+
+                <select
+                    id="taskPriority"
+                    aria-label="Task priority">
+
+                    <option value="low">
+                        Low Priority
+                    </option>
+
+                    <option value="medium">
+                        Medium Priority
+                    </option>
+
+                    <option value="high">
+                        High Priority
+                    </option>
+
                 </select>
 
-                <input type="date" id="taskDate" required>
+                <input
+                    type="date"
+                    id="taskDate"
+                    aria-label="Task due date"
+                    required>
 
                 <div class="modal-actions">
-                    <button type="button" id="closeModal">Cancel</button>
-                    <button type="submit" id="saveTaskBtn">Save Task</button>
+
+                    <button
+                        type="button"
+                        id="closeModal">
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        id="saveTaskBtn">
+                        Save Task
+                    </button>
+
                 </div>
+
             </form>
+
         </div>
+
     </div>
 
-    <script type="module" src="./js/auth-guard.js"></script>
-    <script type="module" src="./js/app.js"></script>
+    <!-- =========================
+         APPLICATION SCRIPTS
+    ========================== -->
+
+    <script
+        type="module"
+        src="./js/auth-guard.js">
+    </script>
+
+    <script
+        type="module"
+        src="./js/app.js">
+    </script>
+    <script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker
+                .register("./service-worker.js")
+                .then(registration => {
+                    console.log(
+                        "Service Worker registered:",
+                        registration.scope
+                    );
+                })
+                .catch(error => {
+                    console.error(
+                        "Service Worker registration failed:",
+                        error
+                    );
+                });
+        });
+    }
+</script>
+
+<script type="module" src="./js/pwa.js"></script>
 
 </body>
 

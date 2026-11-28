@@ -1,6 +1,10 @@
+
 import { register, login } from "./api.js";
 
-// Elements
+// =================================
+// AUTHENTICATION ELEMENTS
+// =================================
+
 const authForm = document.getElementById("authForm");
 const loginTab = document.getElementById("loginTab");
 const signupTab = document.getElementById("signupTab");
@@ -12,17 +16,30 @@ const authMessage = document.getElementById("authMessage");
 
 const emailInput = document.getElementById("authEmail");
 const passwordInput = document.getElementById("authPassword");
-const confirmPasswordInput = document.getElementById("confirmPassword");
-const confirmPasswordField = document.getElementById("confirmPasswordField");
+
+const confirmPasswordInput =
+    document.getElementById("confirmPassword");
+
+const confirmPasswordField =
+    document.getElementById("confirmPasswordField");
+
+// APPLICATION STATE
 
 let isSignup = false;
+let isSubmitting = false;
 
-// Switch between Login and Sign Up
+// =================================
+// SWITCH AUTHENTICATION MODE
+// =================================
+
 function setAuthMode(signup) {
     isSignup = signup;
 
     loginTab.classList.toggle("active", !signup);
     signupTab.classList.toggle("active", signup);
+
+    loginTab.setAttribute("aria-pressed", String(!signup));
+    signupTab.setAttribute("aria-pressed", String(signup));
 
     authTitle.textContent = signup
         ? "Create Account"
@@ -36,85 +53,165 @@ function setAuthMode(signup) {
         ? "Create Account"
         : "Login";
 
+    // Confirm password visibility
+
     confirmPasswordField.hidden = !signup;
     confirmPasswordInput.required = signup;
+    confirmPasswordInput.disabled = !signup;
+
+    // Password manager support
+
+    passwordInput.autocomplete = signup
+        ? "new-password"
+        : "current-password";
+
+    passwordInput.value = "";
+    confirmPasswordInput.value = "";
 
     authMessage.textContent = "";
 }
 
-// Tab events
+// =================================
+// AUTHENTICATION TAB EVENTS
+// =================================
+
 loginTab.addEventListener("click", () => {
-    setAuthMode(false);
+    if (!isSubmitting && isSignup) {
+        setAuthMode(false);
+    }
 });
 
 signupTab.addEventListener("click", () => {
-    setAuthMode(true);
+    if (!isSubmitting && !isSignup) {
+        setAuthMode(true);
+    }
 });
 
-// Display messages
+// =================================
+// DISPLAY AUTHENTICATION MESSAGES
+// =================================
+
 function showMessage(message, isError = false) {
     authMessage.textContent = message;
+
     authMessage.style.color = isError
         ? "#ff6685"
         : "#16c995";
 }
 
-// Handle authentication
+// =================================
+// LOADING STATE
+// =================================
+
+function setLoading(loading) {
+    isSubmitting = loading;
+
+    authSubmit.disabled = loading;
+    loginTab.disabled = loading;
+    signupTab.disabled = loading;
+
+    authForm.setAttribute("aria-busy", String(loading));
+
+    authSubmit.textContent = loading
+        ? "Please wait..."
+        : isSignup
+            ? "Create Account"
+            : "Login";
+}
+
+// =================================
+// HANDLE AUTHENTICATION
+// =================================
+
 authForm.addEventListener("submit", async (event) => {
     event.preventDefault();
+
+    if (isSubmitting) return;
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
 
-    authSubmit.disabled = true;
-    authSubmit.textContent = "Please wait...";
+    authMessage.textContent = "";
+
+    // Validate required fields
+
+    if (!email || !password) {
+        showMessage(
+            "Please complete all required fields.",
+            true
+        );
+        return;
+    }
+
+    if (isSignup) {
+        const confirmPassword = confirmPasswordInput.value;
+
+        if (password.length < 8) {
+            showMessage(
+                "Password must contain at least 8 characters.",
+                true
+            );
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            showMessage(
+                "Passwords do not match.",
+                true
+            );
+            return;
+        }
+    }
+
+    // Check internet connection
+
+    if (!navigator.onLine) {
+        showMessage(
+            "You are offline. Please check your internet connection.",
+            true
+        );
+        return;
+    }
+
+    setLoading(true);
 
     try {
+        // CREATE ACCOUNT
+
         if (isSignup) {
-            const confirmPassword = confirmPasswordInput.value;
-
-            if (password !== confirmPassword) {
-                showMessage("Passwords do not match.", true);
-                return;
-            }
-
-            if (password.length < 8) {
-                showMessage(
-                    "Password must contain at least 8 characters.",
-                    true
-                );
-                return;
-            }
-
             const name = email.split("@")[0].slice(0, 100);
 
             await register(name, email, password);
 
             setAuthMode(false);
 
-            passwordInput.value = "";
-            confirmPasswordInput.value = "";
-
             showMessage(
                 "Account created successfully! Please login."
             );
 
         } else {
+            // LOGIN
+
             await login(email, password);
 
-            window.location.href = "./index.html";
+            window.location.replace("./index.html");
         }
 
     } catch (error) {
-        showMessage(error.message, true);
+        console.error("Authentication failed:", error);
+
+        showMessage(
+            error.message || "Authentication failed. Please try again.",
+            true
+        );
 
     } finally {
-        authSubmit.disabled = false;
-        authSubmit.textContent = isSignup
-            ? "Create Account"
-            : "Login";
+        setLoading(false);
     }
 });
 
-// Start in Login mode
+// =================================
+// INITIALIZE AUTHENTICATION
+// =================================
+
 setAuthMode(false);
